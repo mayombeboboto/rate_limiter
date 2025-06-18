@@ -1,5 +1,7 @@
 # RateLimiter
 
+[![CI](https://github.com/elixir-plug/mime/actions/workflows/ci.yml/badge.svg)](https://github.com/mayombeboboto/rate_limiter/actions/workflows/ci.yml)
+
 RateLimiter is an Elixir library that provides robust, concurrent-safe rate limiting using two classic algorithms: **Leaky Bucket** and **Token Bucket**. It is designed for use in distributed systems, APIs, background jobs, or anywhere you need to control the rate of operations.
 
 ## Features
@@ -96,6 +98,46 @@ end
 
 - **Leaky Bucket**: When you want a steady, constant rate of processing (e.g., smoothing out bursts).
 - **Token Bucket**: When you want to allow short bursts but enforce an average rate over time.
+
+## Contributing
+
+Before submitting a PR, ensure you run `mix check` and all checks passes
+successfully.
+
+## Version Bumps
+
+This project adheres to [Semantic Versioning][semantic-versioning],
+which means the version number will follow the format `MAJOR.MINOR.PATCH`.
+
+Also, the [github-tag-action][github-tag-action] is used to automatically
+create a new tag when the PR is merged to master.
+
+When open a PR meant to generate a new version:
+
+1. Update the `mix.exs` and `README` with the new version.
+
+2. Update [CHANGELOG](CHANGELOG.md) with the new version tight to
+   [semantic versioning][semantic-versioning].
+
+3. Don't forget to include in your commit the tag:
+
+   - `"#patch"` for increment `PATCH` version.
+     E.g.: **"Fix failing tests (#patch)"**.
+   - `"#minor"` for increment `MINOR` version.
+     E.g.: **"Add Telemetry utility to instrument the projects (#minor)"**.
+   - `"#major"` for increment `MAJOR` version.
+     E.g.: **"Release x.y.z (#major)"**.
+
+[github-tag-action]: https://github.com/anothrNick/github-tag-action
+[semantic-versioning]: https://semver.org/spec/v2.0.0.html
+
+If for some reason GH actions are not working (maybe because we ran out of
+minutes), then push the tag manually, like so:
+
+```
+git tag -a v0.1.0 -m "RateLimiter version 0.1.0"
+git push origin v0.1.0
+```
 
 ## License
 
