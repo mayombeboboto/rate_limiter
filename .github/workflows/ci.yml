@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  mix_check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Elixir
+        uses: erlef/setup-beam@v1
+        with:
+          elixir-version: '1.18'
+          otp-version: '27'
+
+      - name: Install dependencies
+        run: mix deps.get
+
+      - name: Compile
+        run: mix compile --warnings-as-errors
+
+      - name: Run mix check
+        run: mix check
+
+  require_mix_check_on_main:
+    if: github.ref == 'refs/heads/main'
+    needs: mix_check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ensure mix check passed on main
+        run: echo "mix check passed on main branch. Merge allowed."
